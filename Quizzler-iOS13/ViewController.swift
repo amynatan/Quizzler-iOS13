@@ -44,24 +44,36 @@ class ViewController: UIViewController {
         
         let userAnswer = sender.currentTitle // "True", "False"
         let actualAnswer = quiz[questionNumber].answer
+        //let timer =
     
         if userAnswer == actualAnswer {
-            print("Right!")
+            sender.backgroundColor = UIColor.green
         } else {
-            print("Wrong!")
+            sender.backgroundColor = UIColor.red
         }
         
-        if questionNumber + 1 < quiz.count { //count is the number of itemns in an array (in this case, 3)
+        if questionNumber + 1 < quiz.count { //count is the number of items in an array (in this case, 3)
             questionNumber += 1
         } else {
             questionNumber = 0
         }
         
+        Timer.scheduledTimer(timeInterval: 0.2, target:self, selector:#selector(updateUI), userInfo:nil, repeats: false)
         
-        updateUI()
+        
     }
     
-    func updateUI() {
+    @objc func updateUI() {
         questionLabel.text = quiz[questionNumber].text
+        trueButton.backgroundColor = UIColor.clear
+        falseButton.backgroundColor = UIColor.clear
+        progressBar.progress = Float(questionNumber + 1) / Float(quiz.count)
+        print(progressBar.progress)
+        
+        /*if questionNumber < 12 {
+            progressBar.progress += Float(Double(0.08))
+        } else {
+            progressBar.progress = 1.0
+        }*/
     }
 }
